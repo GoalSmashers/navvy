@@ -15,7 +15,7 @@ group :mongo_mapper do
 end
 
 group :sequel do
-  gem 'sequel', '~> 3.0'
+  gem 'sequel', '~> 4.0'
 end
 
 group :mongoid do

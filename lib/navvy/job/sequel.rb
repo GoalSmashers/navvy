@@ -47,7 +47,7 @@ module Navvy
       filter(:failed_at => nil).
         filter(:completed_at => nil).
         filter{run_at <= Time.now}.
-        order(:priority.desc, :created_at).
+        order(Sequel.desc(:priority), :created_at).
         first(limit)
     end
 
@@ -63,7 +63,7 @@ module Navvy
         time = Time.now - keep
         filter{completed_at <= time}.delete
       else
-        filter(~{:completed_at => nil}).delete unless keep?
+        filter(Sequel.negate(:completed_at => nil)).delete unless keep?
       end
     end
 
@@ -73,7 +73,7 @@ module Navvy
     # @return [Integer] amount the amount of jobs that were deleted
 
     def self.delete_all
-      Navvy::Job.destroy
+      db[table_name].delete
     end
 
     ##
@@ -128,8 +128,8 @@ module Navvy
 
     def times_failed
       i = parent_id || id
-      self.class.filter({:id => i} | {:parent_id => i}).
-        filter(~{:failed_at => nil}).
+      self.class.filter(Sequel.or([[:id, i], [:parent_id, i]])).
+        filter(Sequel.negate(:failed_at => nil)).
         count
     end
   end
