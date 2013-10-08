@@ -9,7 +9,7 @@ describe Navvy::Worker do
         Navvy::Job.enqueue(Cow, :speak)
       ]
 
-      Navvy::Job.stub!(:next).and_return(@jobs)
+      Navvy::Job.stub(:next).and_return(@jobs)
     end
 
     it 'should fetch jobs' do

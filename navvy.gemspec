@@ -1,3 +1,5 @@
+require 'date'
+
 Gem::Specification.new do |gem|
   gem.name    = 'navvy'
   gem.version = '0.3.2'
@@ -15,8 +17,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('rake')
   gem.add_development_dependency('sqlite3-ruby')
   gem.add_development_dependency('bson_ext')
-  gem.add_development_dependency('rspec', ["~> 2.0"])
+  gem.add_development_dependency('rspec', ["~> 2.14"])
   gem.add_development_dependency('yard', [">= 0.5.2"])
   gem.add_development_dependency('timecop', [">= 0.3.5"])
-  gem.add_development_dependency('fuubar', ["~> 0.0"])
+  gem.add_development_dependency('fuubar', ["~> 1.2"])
 end

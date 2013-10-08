@@ -319,7 +319,7 @@ describe 'Navvy::Job' do
 
     it 'should not retry when the job has failed 25 times already' do
       jobs = Navvy::Job.next
-      jobs.first.stub!(:times_failed).and_return 25
+      jobs.first.stub(:times_failed).and_return 25
       jobs.first.should_not_receive(:retry)
       jobs.first.failed('broken')
     end
@@ -327,7 +327,7 @@ describe 'Navvy::Job' do
     it 'should not retry when the job has failed 10 times' do
       Navvy::Job.max_attempts = 10
       jobs = Navvy::Job.next
-      jobs.first.stub!(:times_failed).and_return 10
+      jobs.first.stub(:times_failed).and_return 10
       jobs.first.should_not_receive(:retry)
       jobs.first.failed('broken')
     end
@@ -369,21 +369,21 @@ describe 'Navvy::Job' do
 
     it 'should set the run_at date to about 16 seconds from now' do
       failed_job = Navvy::Job.enqueue(Cow, :speak, 'name' => 'Betsy')
-      failed_job.stub!(:times_failed).and_return 2
+      failed_job.stub(:times_failed).and_return 2
       job = failed_job.retry
       job.run_at.to_i.should == (Time.now + 16).to_i
     end
 
     it 'should set the run_at date to about 256 seconds from now' do
       failed_job = Navvy::Job.enqueue(Cow, :speak, 'name' => 'Betsy')
-      failed_job.stub!(:times_failed).and_return 4
+      failed_job.stub(:times_failed).and_return 4
       job = failed_job.retry
       job.run_at.to_i.should == (Time.now + 256).to_i
     end
 
     it 'should set the run_at date to about 4096 seconds from now' do
       failed_job = Navvy::Job.enqueue(Cow, :speak, 'name' => 'Betsy')
-      failed_job.stub!(:times_failed).and_return 8
+      failed_job.stub(:times_failed).and_return 8
       job = failed_job.retry
       job.run_at.to_i.should == (Time.now + 4096).to_i
     end
